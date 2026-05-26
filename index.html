@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+<title>VerveCall</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wdth,wght@75..100,400..800&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<svg id="vc-icons" xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <symbol id="ic-home" viewBox="0 0 24 24"><path fill="currentColor" d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></symbol>
+  <symbol id="ic-users" viewBox="0 0 24 24"><path fill="currentColor" d="M16 11c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 3-1.34 3-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></symbol>
+  <symbol id="ic-useradd" viewBox="0 0 24 24"><path fill="currentColor" d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></symbol>
+  <symbol id="ic-person" viewBox="0 0 24 24"><path fill="currentColor" d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></symbol>
+  <symbol id="ic-phone" viewBox="0 0 24 24"><path fill="currentColor" d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></symbol>
+  <symbol id="ic-phone-off" viewBox="0 0 24 24"><path fill="currentColor" d="M15.16 13.49l-2.32-2.32a8.002 8.002 0 00-2.68-5.27C8.42 4.33 5.6 4.1 3.42 5.18L5.83 7.6c.37-.12.77-.19 1.17-.19 1.66 0 3 1.34 3 3 0 .4-.07.8-.19 1.17l2.39 2.39c.47-.82.8-1.73.96-2.7zM19.73 20l-2.56-2.56c.93-.95 1.72-2.05 2.3-3.27.3-.62.3-1.34 0-1.97C18.13 10.24 15.23 8.5 12 8.5c-.92 0-1.82.14-2.66.4L7.07 6.63C8.63 6.23 10.29 6 12 6c4.42 0 8.24 2.65 10 6.5C21.12 14.37 20.58 17.34 19.73 20zm.27-20L2.73 0 1.46 1.27l3.26 3.26C3.02 5.75 2 7.76 2 10c0 5.5 10 22 10 22 0 0 4.05-7.12 7.05-15.42l2.68 2.68L23 17.73 20 2z"/></symbol>
+  <symbol id="ic-mic" viewBox="0 0 24 24"><path fill="currentColor" d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm-1-9c0-.55.45-1 1-1s1 .45 1 1v6c0 .55-.45 1-1 1s-1-.45-1-1V5zm6 6c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></symbol>
+  <symbol id="ic-mic-off" viewBox="0 0 24 24"><path fill="currentColor" d="M19 11h-1.7c0 .74-.16 1.43-.43 2.05l1.23 1.23c.56-.98.9-2.09.9-3.28zm-4.02.17c0-.06.02-.11.02-.17V5c0-1.66-1.34-3-3-3S9 3.34 9 5v.18l5.98 5.99zM4.27 3L3 4.27l6.01 6.01V11c0 1.66 1.33 3 2.99 3 .22 0 .44-.03.65-.08l1.66 1.66c-.71.33-1.5.52-2.31.52-2.76 0-5.3-2.1-5.3-5.1H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c.91-.13 1.77-.45 2.54-.9L19.73 21 21 19.73 4.27 3z"/></symbol>
+  <symbol id="ic-video" viewBox="0 0 24 24"><path fill="currentColor" d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></symbol>
+  <symbol id="ic-video-off" viewBox="0 0 24 24"><path fill="currentColor" d="M21 6.5l-4 4V7c0-.55-.45-1-1-1H9.82L21 17.18V6.5zM3.27 2L2 3.27 4.73 6H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.21 0 .39-.08.54-.18L19.73 21 21 19.73 3.27 2z"/></symbol>
+  <symbol id="ic-flip" viewBox="0 0 24 24"><path fill="currentColor" d="M20 5h-3.17L15 3H9L7.17 5H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm-9 13v-3c-3.27-.82-5.56-3.89-5-7.28.36-2.17 1.96-4 3.97-4.72C10.64 2.43 11.8 2 13 2v3l4-4-4-4v3c-3.86.54-7 3.94-7 8 0 3.6 2.33 6.65 5.54 7.76L9 18z"/></symbol>
+  <symbol id="ic-search" viewBox="0 0 24 24"><path fill="currentColor" d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></symbol>
+  <symbol id="ic-copy" viewBox="0 0 24 24"><path fill="currentColor" d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></symbol>
+  <symbol id="ic-sun" viewBox="0 0 24 24"><path fill="currentColor" d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.79 1.42-1.41zM4 10.5H1v2h3v-2zm9-9.95h-2V3.5h2V.55zm7.45 3.91l-1.41-1.41-1.79 1.79 1.41 1.41 1.79-1.79zm-3.21 13.7l1.79 1.8 1.41-1.41-1.8-1.79-1.4 1.4zM20 10.5v2h3v-2h-3zm-8-5c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm-1 16.95h2V19.5h-2v2.95zm-7.45-3.91l1.41 1.41 1.79-1.8-1.41-1.41-1.79 1.8z"/></symbol>
+  <symbol id="ic-moon" viewBox="0 0 24 24"><path fill="currentColor" d="M10 2c-1.82 0-3.53.5-5 1.35C7.99 5.08 10 8.3 10 12s-2.01 6.92-5 8.65C6.47 21.5 8.18 22 10 22c5.52 0 10-4.48 10-10S15.52 2 10 2z"/></symbol>
+  <symbol id="ic-logout" viewBox="0 0 24 24"><path fill="currentColor" d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 24 24"><path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></symbol>
+  <symbol id="ic-close" viewBox="0 0 24 24"><path fill="currentColor" d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></symbol>
+  <symbol id="ic-settings" viewBox="0 0 24 24"><path fill="currentColor" d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></symbol>
+  <symbol id="ic-id" viewBox="0 0 24 24"><path fill="currentColor" d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-8 2.75c1.24 0 2.25 1.01 2.25 2.25S13.24 11.25 12 11.25 9.75 10.24 9.75 9s1.01-2.25 2.25-2.25zM17 17H7v-.75c0-1.67 3.33-2.5 5-2.5s5 .83 5 2.5V17z"/></symbol>
+  <symbol id="ic-delete" viewBox="0 0 24 24"><path fill="currentColor" d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></symbol>
+  <symbol id="ic-video-call" viewBox="0 0 24 24"><path fill="currentColor" d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4zM14 13h-3v3H9v-3H6v-2h3V8h2v3h3v2z"/></symbol>
+</svg>
+
+<div id="app">
+
+  <div id="screen-auth" class="screen active">
+    <div class="auth-glow"></div>
+    <div class="auth-card">
+      <div class="auth-brand">
+        <div class="auth-logo">
+          <svg class="vc-icon auth-logo-icon"><use href="#ic-video-call"/></svg>
+        </div>
+        <h1 class="auth-title">VerveCall</h1>
+        <p class="auth-sub">Crystal-clear video calls</p>
+      </div>
+      <div class="tab-row">
+        <button class="auth-tab active" data-tab="login">Sign In</button>
+        <button class="auth-tab" data-tab="register">Create Account</button>
+      </div>
+      <div id="tab-login" class="auth-form active">
+        <div class="input-group">
+          <input type="email" id="login-email" placeholder="Email address" autocomplete="email" />
+        </div>
+        <div class="input-group">
+          <input type="password" id="login-password" placeholder="Password" autocomplete="current-password" />
+        </div>
+        <button id="btn-login" class="btn-primary">Sign In</button>
+      </div>
+      <div id="tab-register" class="auth-form">
+        <div class="input-group">
+          <input type="text" id="reg-name" placeholder="Display name" />
+        </div>
+        <div class="input-group">
+          <input type="email" id="reg-email" placeholder="Email address" autocomplete="email" />
+        </div>
+        <div class="input-group">
+          <input type="password" id="reg-password" placeholder="Password (min 6 chars)" autocomplete="new-password" />
+        </div>
+        <button id="btn-register" class="btn-primary">Create Account</button>
+      </div>
+      <div id="auth-error" class="auth-error"></div>
+    </div>
+  </div>
+
+  <div id="main-shell" hidden>
+    <header id="app-header">
+      <div class="hdr-brand" id="hdr-brand">VerveCall</div>
+      <div class="hdr-title" id="hdr-title"></div>
+      <div class="hdr-actions" id="hdr-actions"></div>
+    </header>
+
+    <div id="pages-wrap">
+
+      <section id="page-home" class="page active">
+        <div class="search-bar-wrap">
+          <div class="search-input-row">
+            <svg class="vc-icon search-ico"><use href="#ic-search"/></svg>
+            <input type="text" id="contact-search" placeholder="Search contacts…" />
+          </div>
+        </div>
+        <div id="contacts-list" class="contacts-list">
+          <div class="empty-state" id="contacts-empty">
+            <svg class="vc-icon empty-ico"><use href="#ic-users"/></svg>
+            <p class="empty-title">No contacts yet</p>
+            <p class="empty-sub">Go to the Add tab to find people by their calling ID</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="page-room" class="page">
+        <div class="room-page-wrap">
+          <div class="room-page-header">
+            <p class="room-page-desc">Select contacts to invite to a group call</p>
+            <div class="room-selection-count" id="room-sel-count" style="display:none">
+              <span id="room-sel-num">0</span> selected
+            </div>
+          </div>
+          <div id="room-contacts-list" class="contacts-list selectable">
+            <div class="empty-state" id="room-empty">
+              <svg class="vc-icon empty-ico"><use href="#ic-users"/></svg>
+              <p class="empty-title">No contacts found</p>
+              <p class="empty-sub">Save contacts in the Add tab first</p>
+            </div>
+          </div>
+          <div class="room-start-bar" id="room-start-bar" style="display:none">
+            <button id="btn-start-room" class="btn-primary btn-start-room">
+              <svg class="vc-icon"><use href="#ic-video"/></svg>
+              Start Room
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section id="page-add" class="page">
+        <div class="add-page-wrap">
+          <div class="add-search-card">
+            <p class="add-label">Enter a 6-digit Calling ID</p>
+            <div class="add-input-row">
+              <input type="tel" id="add-id-input" placeholder="000 000" maxlength="7" class="add-id-input" inputmode="numeric" />
+              <button id="btn-find-contact" class="btn-find">
+                <svg class="vc-icon"><use href="#ic-search"/></svg>
+              </button>
+            </div>
+            <p class="add-hint">Ask the other person to share their ID from their Profile</p>
+          </div>
+          <div id="add-result" class="add-result" style="display:none">
+            <div class="found-card">
+              <div class="found-avatar" id="found-avatar"></div>
+              <div class="found-info">
+                <p class="found-name" id="found-name"></p>
+                <p class="found-id" id="found-id-display"></p>
+              </div>
+            </div>
+            <div class="found-actions">
+              <button id="btn-save-contact" class="btn-save">
+                <svg class="vc-icon"><use href="#ic-check"/></svg>
+                Save Contact
+              </button>
+              <button id="btn-call-found" class="btn-call-found">
+                <svg class="vc-icon"><use href="#ic-phone"/></svg>
+                Call Now
+              </button>
+            </div>
+          </div>
+          <div id="add-error" class="add-error" style="display:none"></div>
+        </div>
+      </section>
+
+      <section id="page-profile" class="page">
+        <div class="profile-wrap">
+          <div class="profile-hero">
+            <div class="profile-avatar" id="profile-avatar"></div>
+            <p class="profile-name" id="profile-name"></p>
+            <p class="profile-email" id="profile-email"></p>
+          </div>
+
+          <div class="profile-section">
+            <p class="profile-section-label">Your Calling ID</p>
+            <div class="id-display-card">
+              <div class="id-value-wrap">
+                <svg class="vc-icon id-card-icon"><use href="#ic-id"/></svg>
+                <span class="id-value" id="profile-id-display">——</span>
+              </div>
+              <button id="btn-copy-id" class="btn-icon-only" title="Copy ID">
+                <svg class="vc-icon"><use href="#ic-copy"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="profile-section">
+            <p class="profile-section-label">Appearance</p>
+            <div class="setting-row">
+              <div class="setting-row-left">
+                <div class="setting-icon-wrap">
+                  <svg class="vc-icon" id="theme-icon"><use href="#ic-moon"/></svg>
+                </div>
+                <span class="setting-label">Light Mode</span>
+              </div>
+              <button class="toggle-switch" id="theme-toggle" aria-label="Toggle theme" role="switch" aria-checked="false">
+                <span class="toggle-knob"></span>
+              </button>
+            </div>
+          </div>
+
+          <div class="profile-section">
+            <p class="profile-section-label">Account</p>
+            <button id="btn-logout" class="setting-row setting-row-btn danger-row">
+              <div class="setting-row-left">
+                <div class="setting-icon-wrap danger-icon">
+                  <svg class="vc-icon"><use href="#ic-logout"/></svg>
+                </div>
+                <span class="setting-label">Sign Out</span>
+              </div>
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <nav id="bottom-nav">
+      <button class="nav-item active" data-page="home">
+        <svg class="vc-icon nav-icon"><use href="#ic-home"/></svg>
+        <span>Home</span>
+      </button>
+      <button class="nav-item" data-page="room">
+        <svg class="vc-icon nav-icon"><use href="#ic-users"/></svg>
+        <span>Room</span>
+      </button>
+      <button class="nav-item nav-item-add" data-page="add">
+        <div class="nav-add-bubble">
+          <svg class="vc-icon nav-icon"><use href="#ic-useradd"/></svg>
+        </div>
+        <span>Add</span>
+      </button>
+      <button class="nav-item" data-page="profile">
+        <svg class="vc-icon nav-icon"><use href="#ic-person"/></svg>
+        <span>Profile</span>
+      </button>
+    </nav>
+  </div>
+
+  <div id="overlay-incoming" class="overlay" hidden>
+    <div class="incoming-glow"></div>
+    <div class="incoming-body">
+      <div class="incoming-top">
+        <div class="incoming-avatar-wrap">
+          <div class="incoming-pulse"></div>
+          <div class="incoming-pulse pulse2"></div>
+          <div class="incoming-avatar" id="incoming-avatar"></div>
+        </div>
+        <p class="incoming-caller" id="incoming-caller-name">Unknown</p>
+        <p class="incoming-label">Incoming video call</p>
+      </div>
+      <div class="incoming-actions">
+        <div class="ring-col">
+          <button id="btn-reject" class="ring-btn ring-reject">
+            <svg class="vc-icon ring-icon rotate-phone"><use href="#ic-phone"/></svg>
+          </button>
+          <span class="ring-lbl">Decline</span>
+        </div>
+        <div class="ring-col">
+          <button id="btn-accept" class="ring-btn ring-accept">
+            <svg class="vc-icon ring-icon"><use href="#ic-phone"/></svg>
+          </button>
+          <span class="ring-lbl">Accept</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="overlay-room-invite" class="overlay" hidden>
+    <div class="incoming-glow room-glow"></div>
+    <div class="incoming-body">
+      <div class="incoming-top">
+        <div class="incoming-avatar-wrap">
+          <div class="incoming-pulse"></div>
+          <div class="incoming-pulse pulse2"></div>
+          <div class="incoming-avatar room-invite-avatar" id="room-invite-avatar"></div>
+        </div>
+        <p class="incoming-caller" id="room-invite-host">Someone</p>
+        <p class="incoming-label">Invited you to a room call</p>
+      </div>
+      <div class="incoming-actions">
+        <div class="ring-col">
+          <button id="btn-decline-room" class="ring-btn ring-reject">
+            <svg class="vc-icon ring-icon rotate-phone"><use href="#ic-phone"/></svg>
+          </button>
+          <span class="ring-lbl">Decline</span>
+        </div>
+        <div class="ring-col">
+          <button id="btn-join-room" class="ring-btn ring-accept">
+            <svg class="vc-icon ring-icon"><use href="#ic-users"/></svg>
+          </button>
+          <span class="ring-lbl">Join</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="overlay-call" class="overlay" hidden>
+    <div id="call-remote-wrap" class="video-full">
+      <div class="video-placeholder" id="call-remote-placeholder">
+        <div class="call-placeholder-avatar" id="call-placeholder-avatar"></div>
+        <span id="call-placeholder-name">Connecting…</span>
+        <div class="connecting-dots"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+
+    <div id="call-local-pip" class="pip-win">
+      <div id="call-local-container" class="pip-video"></div>
+      <span class="pip-you">You</span>
+    </div>
+
+    <div class="call-top-bar">
+      <div class="call-info">
+        <p class="call-peer-name" id="call-peer-name">—</p>
+        <div class="call-status-row">
+          <span class="status-dot" id="call-dot"></span>
+          <span id="call-status-txt">Calling…</span>
+          <span class="call-timer" id="call-timer"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="call-controls" id="call-controls">
+      <button id="btn-toggle-mic" class="ctrl-btn">
+        <div class="ctrl-icon-wrap">
+          <svg class="vc-icon ctrl-icon" id="ctrl-mic-icon"><use href="#ic-mic"/></svg>
+        </div>
+        <span class="ctrl-lbl">Mute</span>
+      </button>
+      <button id="btn-toggle-cam" class="ctrl-btn">
+        <div class="ctrl-icon-wrap">
+          <svg class="vc-icon ctrl-icon" id="ctrl-cam-icon"><use href="#ic-video"/></svg>
+        </div>
+        <span class="ctrl-lbl">Camera</span>
+      </button>
+      <button id="btn-flip-cam" class="ctrl-btn">
+        <div class="ctrl-icon-wrap">
+          <svg class="vc-icon ctrl-icon"><use href="#ic-flip"/></svg>
+        </div>
+        <span class="ctrl-lbl">Flip</span>
+      </button>
+      <button id="btn-end-call" class="ctrl-btn ctrl-end">
+        <div class="ctrl-icon-wrap end-icon-wrap">
+          <svg class="vc-icon ctrl-icon rotate-phone"><use href="#ic-phone"/></svg>
+        </div>
+        <span class="ctrl-lbl">End</span>
+      </button>
+    </div>
+  </div>
+
+  <div id="overlay-room-call" class="overlay" hidden>
+    <div class="room-call-wrap">
+      <div class="room-call-header">
+        <div class="room-call-info">
+          <span class="room-call-title">Room</span>
+          <span class="room-call-timer" id="room-timer"></span>
+        </div>
+        <button id="btn-end-room" class="btn-end-room">
+          <svg class="vc-icon"><use href="#ic-phone"/></svg>
+        </button>
+      </div>
+      <div class="room-video-grid" id="room-remote-grid"></div>
+      <div class="room-local-pip">
+        <div id="room-local-container" class="pip-video"></div>
+        <span class="pip-you">You</span>
+      </div>
+      <div class="room-controls">
+        <button id="btn-room-mic" class="ctrl-btn">
+          <div class="ctrl-icon-wrap">
+            <svg class="vc-icon ctrl-icon" id="room-mic-icon"><use href="#ic-mic"/></svg>
+          </div>
+          <span class="ctrl-lbl">Mute</span>
+        </button>
+        <button id="btn-room-cam" class="ctrl-btn">
+          <div class="ctrl-icon-wrap">
+            <svg class="vc-icon ctrl-icon" id="room-cam-icon"><use href="#ic-video"/></svg>
+          </div>
+          <span class="ctrl-lbl">Camera</span>
+        </button>
+        <button id="btn-leave-room" class="ctrl-btn ctrl-end">
+          <div class="ctrl-icon-wrap end-icon-wrap">
+            <svg class="vc-icon ctrl-icon rotate-phone"><use href="#ic-phone"/></svg>
+          </div>
+          <span class="ctrl-lbl">Leave</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script src="https://download.agora.io/sdk/release/AgoraRTC_N-4.22.0.js"></script>
+<script type="module" src="app.js"></script>
+</body>
+</html>
